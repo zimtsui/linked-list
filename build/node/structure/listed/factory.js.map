@@ -1,0 +1,1 @@
+{"version":3,"file":"factory.js","sourceRoot":"","sources":["../../../../src/node/structure/listed/factory.ts"],"names":[],"mappings":";;;AAGA,mCAAiC;AAGjC,MAAa,OAAO;IACnB,YACS,SAA2B;QAA3B,cAAS,GAAT,SAAS,CAAkB;IAChC,CAAC;IAEE,MAAM,CACZ,IAAiB,EACjB,IAAiB,EACjB,IAAiB;QAEjB,IAAI,cAAM,CACT,IAAI,EACJ,IAAI,CAAC,SAAS,EACd,IAAI,EACJ,IAAI,CACJ,CAAC;IACH,CAAC;CACD;AAjBD,0BAiBC"}

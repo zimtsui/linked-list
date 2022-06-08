@@ -1,2 +1,2 @@
-export { Unfriendly as Node } from './node';
-export { createRegular, createSentinel, } from './unfriendly/constructor';
+export { Unfriendly as Node } from './node-instance';
+export { createRegular, createSentinel, } from './constructor';

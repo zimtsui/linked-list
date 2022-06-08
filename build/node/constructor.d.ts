@@ -1,4 +1,4 @@
-import { Node, Unfriendly } from './node';
-import * as Structure from './structure/factories';
-export declare function createSentinel<T>(host: Unfriendly<T>): Node<T>;
-export declare function createRegular<T>(host: Unfriendly<T>, structFactories: Structure.Factories<T>, x: T): Node<T>;
+import { Unfriendly as Node } from './node-instance';
+import * as Friendly from './friendly';
+export declare function createSentinel<T>(): Node<T>;
+export declare function createRegular<T>(structFactories: Friendly.StructFactories<T>, x: T): Node<T>;

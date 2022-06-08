@@ -1,5 +1,5 @@
-export { Unfriendly as Node } from './node';
+export { Unfriendly as Node } from './node-instance';
 export {
 	createRegular,
 	createSentinel,
-} from './unfriendly/constructor';
+} from './constructor';

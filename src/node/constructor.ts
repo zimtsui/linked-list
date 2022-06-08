@@ -1,79 +1,42 @@
-import {
-	Node,
-	Unfriendly,
-	StructState,
-	MaybeState,
-} from './node';
-import { Effevtive } from './maybe/effective';
-import { Void } from './maybe/void';
-import * as Structure from './structure/factories';
+import { Unfriendly as Node } from './node-instance';
+import * as Friendly from './friendly';
 
 
-class skeletonConstructor<T> extends Node<T> {
-	public structState!: StructState<T>;
-	public maybeState!: MaybeState<T>;
+class sentinelConstructor<T> extends Node<T>{
+	protected friendly: Friendly.Node<T>;
 
-	public constructor(
-		public host: Unfriendly<T>,
-		private structFactories: Structure.Factories<T>,
-	) { super(); }
-
-	public getPrev(): Node<T> {
-		return this.structState.getPrev();
-	}
-
-	public getNext(): Node<T> {
-		return this.structState.getNext();
-	}
-
-	public setPrev(prev: Node<T>): void {
-		this.structState.setPrev(prev);
-	}
-
-	public setNext(next: Node<T>): void {
-		this.structState.setNext(next);
-	}
-
-	public remove(): void {
-		this.structState.remove();
-	}
-
-	public insert(x: T): void {
-		const node = createRegular(
-			this.host,
-			this.structFactories,
-			x,
-		);
-		this.structState.insert(node);
-	}
-
-	public getValue(): T {
-		return this.maybeState.getValue();
+	public constructor() {
+		super();
+		this.friendly = Friendly.createSentinel(this);
 	}
 }
 
-export function createSentinel<T>(
-	host: Unfriendly<T>,
-): Node<T> {
-	const structFactories = new Structure.Factories<T>();
-	const node = new skeletonConstructor(
-		host,
-		structFactories,
-	);
-	new Void(node);
-	structFactories.listed.create(node, node, node);
-	return node;
+export function createSentinel<T>(): Node<T> {
+	return new sentinelConstructor();
+}
+
+class regularConstructor<T> extends Node<T> {
+	protected friendly: Friendly.Node<T>;
+
+	public constructor(
+		structFactories: Friendly.StructFactories<T>,
+		x: T,
+	) {
+		super();
+		this.friendly = Friendly.createRegular(
+			this,
+			structFactories,
+			x,
+		);
+	}
 }
 
 export function createRegular<T>(
-	host: Unfriendly<T>,
-	structFactories: Structure.Factories<T>,
+	structFactories: Friendly.StructFactories<T>,
 	x: T,
 ): Node<T> {
-	const node = new skeletonConstructor(
-		host,
+	return new regularConstructor(
 		structFactories,
+		x,
 	);
-	new Effevtive(node, x);
-	return node;
 }

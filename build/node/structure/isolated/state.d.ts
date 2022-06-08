@@ -1,13 +1,13 @@
-import { StructState, NodeLike } from '../../node-instance';
+import { StructState, Node } from '../../node';
 import { FactoriesLike } from '../factories-like';
 export declare class Isolated<T> extends StructState<T> {
-    protected host: NodeLike<T>;
+    protected host: Node<T>;
     private factories;
-    constructor(host: NodeLike<T>, factories: FactoriesLike<T>);
-    getPrev(): NodeLike<T>;
-    getNext(): NodeLike<T>;
-    setPrev(prev: NodeLike<T>): void;
-    setNext(next: NodeLike<T>): void;
+    constructor(host: Node<T>, factories: FactoriesLike<T>);
+    getPrev(): Node<T>;
+    getNext(): Node<T>;
+    setPrev(prev: Node<T>): void;
+    setNext(next: Node<T>): void;
     remove(): void;
-    insert(node: NodeLike<T>): void;
+    insert(node: Node<T>): void;
 }

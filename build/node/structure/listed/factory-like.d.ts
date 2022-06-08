@@ -1,4 +1,4 @@
-import { NodeLike } from '../../node-instance';
+import { Node } from '../../node';
 export interface FactoryLike<T> {
-    create(host: NodeLike<T>, prev: NodeLike<T>, next: NodeLike<T>): void;
+    create(host: Node<T>, prev: Node<T>, next: Node<T>): void;
 }

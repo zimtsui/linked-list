@@ -1,8 +1,8 @@
-import { MaybeState } from '../node-instance';
-import { NodeLike } from '../node-instance';
+import { MaybeState } from '../node';
+import { Node } from '../node';
 export declare class Effevtive<T> extends MaybeState<T> {
-    protected host: NodeLike<T>;
+    protected host: Node<T>;
     private value;
-    constructor(host: NodeLike<T>, value: T);
+    constructor(host: Node<T>, value: T);
     getValue(): T;
 }

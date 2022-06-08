@@ -1,7 +1,7 @@
 import { FactoryLike } from './factory-like';
 import { FactoriesLike } from '../factories-like';
 import { Isolated } from './state';
-import { NodeLike } from '../../node-instance';
+import { Node } from '../../node';
 
 
 
@@ -10,7 +10,7 @@ export class Factory<T> implements FactoryLike<T> {
 		private factories: FactoriesLike<T>,
 	) { }
 
-	public create(host: NodeLike<T>): void {
+	public create(host: Node<T>): void {
 		new Isolated(
 			host,
 			this.factories,

@@ -1,17 +1,35 @@
-import { NodeLike, StructState, MaybeState } from './node-instance';
-import * as Structure from './structure/factories';
-export declare class Node<T> implements NodeLike<T> {
-    private structFactories;
-    structState: StructState<T>;
-    maybeState: MaybeState<T>;
-    static createSentinel<T>(): Node<T>;
-    static createRegular<T>(structFactories: Structure.Factories<T>, x: T): Node<T>;
-    constructor(structFactories: Structure.Factories<T>);
-    getPrev(): NodeLike<T>;
-    getNext(): NodeLike<T>;
-    setPrev(prev: NodeLike<T>): void;
-    setNext(next: NodeLike<T>): void;
+export declare abstract class Unfriendly<T> {
+    protected abstract friendly: Node<T>;
+    getPrev(): Unfriendly<T>;
+    getNext(): Unfriendly<T>;
+    setPrev(prev: Unfriendly<T>): void;
+    setNext(next: Unfriendly<T>): void;
     remove(): void;
     insert(x: T): void;
     getValue(): T;
+}
+export declare abstract class Node<T> {
+    abstract structState: StructState<T>;
+    abstract maybeState: MaybeState<T>;
+    abstract host: Unfriendly<T>;
+    abstract getPrev(): Node<T>;
+    abstract getNext(): Node<T>;
+    abstract setPrev(prev: Node<T>): void;
+    abstract setNext(next: Node<T>): void;
+    abstract remove(): void;
+    abstract insert(x: T): void;
+    abstract getValue(): T;
+}
+export declare abstract class StructState<T> {
+    protected abstract host: Node<T>;
+    abstract getPrev(): Node<T>;
+    abstract getNext(): Node<T>;
+    abstract setPrev(prev: Node<T>): void;
+    abstract setNext(next: Node<T>): void;
+    abstract remove(): void;
+    abstract insert(node: Node<T>): void;
+}
+export declare abstract class MaybeState<T> {
+    protected abstract host: Node<T>;
+    abstract getValue(): T;
 }

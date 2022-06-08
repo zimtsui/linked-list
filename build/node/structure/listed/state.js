@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Listed = void 0;
-const node_instance_1 = require("../../node-instance");
-class Listed extends node_instance_1.StructState {
+const node_1 = require("../../node");
+const assert = require("assert");
+class Listed extends node_1.StructState {
     constructor(host, factories, prev, next) {
         super();
         this.host = host;
@@ -24,6 +25,7 @@ class Listed extends node_instance_1.StructState {
         this.next = next;
     }
     remove() {
+        assert(this.getNext() !== this.host, new RangeError());
         this.prev.setNext(this.next);
         this.next.setPrev(this.prev);
         this.factories.isolated.create(this.host);

@@ -1,6 +1,6 @@
 import { FactoryLike } from './factory-like';
 import { FactoriesLike } from '../factories-like';
-import { NodeLike } from '../../node-instance';
+import { Node } from '../../node';
 import { Listed } from './state';
 
 
@@ -10,9 +10,9 @@ export class Factory<T> implements FactoryLike<T> {
 	) { }
 
 	public create(
-		host: NodeLike<T>,
-		prev: NodeLike<T>,
-		next: NodeLike<T>,
+		host: Node<T>,
+		prev: Node<T>,
+		next: Node<T>,
 	): void {
 		new Listed(
 			host,

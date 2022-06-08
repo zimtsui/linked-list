@@ -1,47 +1,37 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Node = void 0;
-const effective_1 = require("./maybe/effective");
-const void_1 = require("./maybe/void");
-const Structure = require("./structure/factories");
-class Node {
-    constructor(structFactories) {
-        this.structFactories = structFactories;
-    }
-    static createSentinel() {
-        const structFactories = new Structure.Factories();
-        const node = new Node(structFactories);
-        new void_1.Void(node);
-        structFactories.listed.create(node, node, node);
-        return node;
-    }
-    static createRegular(structFactories, x) {
-        const node = new Node(structFactories);
-        new effective_1.Effevtive(node, x);
-        return node;
-    }
+exports.MaybeState = exports.StructState = exports.Node = exports.Unfriendly = void 0;
+class Unfriendly {
     getPrev() {
-        return this.structState.getPrev();
+        return this.friendly.getPrev().host;
     }
     getNext() {
-        return this.structState.getNext();
+        return this.friendly.getNext().host;
     }
     setPrev(prev) {
-        this.structState.setPrev(prev);
+        this.friendly.setPrev(prev.friendly);
     }
     setNext(next) {
-        this.structState.setNext(next);
+        this.friendly.setNext(next.friendly);
     }
     remove() {
-        this.structState.remove();
+        this.friendly.remove();
     }
     insert(x) {
-        const node = Node.createRegular(this.structFactories, x);
-        this.structState.insert(node);
+        this.friendly.insert(x);
     }
     getValue() {
-        return this.maybeState.getValue();
+        return this.friendly.getValue();
     }
 }
+exports.Unfriendly = Unfriendly;
+class Node {
+}
 exports.Node = Node;
+class StructState {
+}
+exports.StructState = StructState;
+class MaybeState {
+}
+exports.MaybeState = MaybeState;
 //# sourceMappingURL=node.js.map

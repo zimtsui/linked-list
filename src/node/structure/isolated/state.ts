@@ -1,29 +1,29 @@
-import { StructState, NodeLike } from '../../node-instance';
+import { StructState, Node } from '../../node';
 import { FactoriesLike } from '../factories-like';
 
 
 export class Isolated<T> extends StructState<T> {
 	public constructor(
-		protected host: NodeLike<T>,
+		protected host: Node<T>,
 		private factories: FactoriesLike<T>,
 	) {
 		super();
 		host.structState = this;
 	}
 
-	public getPrev(): NodeLike<T> {
+	public getPrev(): Node<T> {
 		throw new RangeError();
 	}
 
-	public getNext(): NodeLike<T> {
+	public getNext(): Node<T> {
 		throw new RangeError();
 	}
 
-	public setPrev(prev: NodeLike<T>): void {
+	public setPrev(prev: Node<T>): void {
 		throw new RangeError();
 	}
 
-	public setNext(next: NodeLike<T>): void {
+	public setNext(next: Node<T>): void {
 		throw new RangeError();
 	}
 
@@ -31,7 +31,7 @@ export class Isolated<T> extends StructState<T> {
 		throw new RangeError();
 	}
 
-	public insert(node: NodeLike<T>): void {
+	public insert(node: Node<T>): void {
 		throw new RangeError();
 	}
 }

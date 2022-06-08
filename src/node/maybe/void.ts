@@ -1,10 +1,10 @@
-import { MaybeState } from '../node-instance';
-import { NodeLike } from '../node-instance';
+import { MaybeState } from '../node';
+import { Node } from '../node';
 
 
 export class Void<T> extends MaybeState<T> {
 	public constructor(
-		protected host: NodeLike<T>,
+		protected host: Node<T>,
 	) {
 		super();
 		host.maybeState = this;

@@ -1,67 +1,64 @@
-import {
-	NodeLike,
-	StructState,
-	MaybeState,
-} from './node-instance';
-import { Effevtive } from './maybe/effective';
-import { Void } from './maybe/void';
-import * as Structure from './structure/factories';
+export abstract class Unfriendly<T> {
+	protected abstract friendly: Node<T>;
 
-
-export class Node<T> implements NodeLike<T> {
-	public structState!: StructState<T>;
-	public maybeState!: MaybeState<T>;
-
-	public static createSentinel<T>(): Node<T> {
-		const structFactories = new Structure.Factories<T>();
-		const node = new Node(structFactories);
-		new Void(node);
-		structFactories.listed.create(node, node, node);
-		return node;
+	public getPrev(): Unfriendly<T> {
+		return this.friendly.getPrev().host;
 	}
 
-	public static createRegular<T>(
-		structFactories: Structure.Factories<T>,
-		x: T,
-	): Node<T> {
-		const node = new Node(structFactories);
-		new Effevtive(node, x);
-		return node;
+	public getNext(): Unfriendly<T> {
+		return this.friendly.getNext().host;
 	}
 
-	public constructor(
-		private structFactories: Structure.Factories<T>,
-	) { }
-
-	public getPrev(): NodeLike<T> {
-		return this.structState.getPrev();
+	public setPrev(prev: Unfriendly<T>): void {
+		this.friendly.setPrev(prev.friendly);
 	}
 
-	public getNext(): NodeLike<T> {
-		return this.structState.getNext();
-	}
-
-	public setPrev(prev: NodeLike<T>): void {
-		this.structState.setPrev(prev);
-	}
-
-	public setNext(next: NodeLike<T>): void {
-		this.structState.setNext(next);
+	public setNext(next: Unfriendly<T>): void {
+		this.friendly.setNext(next.friendly);
 	}
 
 	public remove(): void {
-		this.structState.remove();
+		this.friendly.remove();
 	}
 
 	public insert(x: T): void {
-		const node = Node.createRegular(
-			this.structFactories,
-			x,
-		);
-		this.structState.insert(node);
+		this.friendly.insert(x);
 	}
 
 	public getValue(): T {
-		return this.maybeState.getValue();
+		return this.friendly.getValue();
 	}
+}
+
+
+export abstract class Node<T> {
+	public abstract structState: StructState<T>;
+	public abstract maybeState: MaybeState<T>;
+	public abstract host: Unfriendly<T>;
+
+	public abstract getPrev(): Node<T>;
+	public abstract getNext(): Node<T>;
+	public abstract setPrev(prev: Node<T>): void;
+	public abstract setNext(next: Node<T>): void;
+	public abstract remove(): void;
+	public abstract insert(x: T): void;
+	public abstract getValue(): T;
+}
+
+
+export abstract class StructState<T> {
+	protected abstract host: Node<T>;
+
+	public abstract getPrev(): Node<T>;
+	public abstract getNext(): Node<T>;
+	public abstract setPrev(prev: Node<T>): void;
+	public abstract setNext(next: Node<T>): void;
+	public abstract remove(): void;
+	public abstract insert(node: Node<T>): void;
+}
+
+
+export abstract class MaybeState<T> {
+	protected abstract host: Node<T>;
+	public abstract getValue(): T;
 }

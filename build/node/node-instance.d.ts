@@ -1,13 +1,13 @@
 export declare abstract class Unfriendly<T> {
     protected abstract friendly: Friendly<T>;
     protected static getFriendly<T>(unfriendly: Unfriendly<T>): Friendly<T>;
-    getPrev(): Unfriendly<T>;
-    getNext(): Unfriendly<T>;
-    setPrev(prev: Unfriendly<T>): void;
-    setNext(next: Unfriendly<T>): void;
-    remove(): void;
-    insert(x: T): void;
-    getValue(): T;
+    abstract getPrev(): Unfriendly<T>;
+    abstract getNext(): Unfriendly<T>;
+    abstract setPrev(prev: Unfriendly<T>): void;
+    abstract setNext(next: Unfriendly<T>): void;
+    abstract remove(): void;
+    abstract insert(x: T): void;
+    abstract getValue(): T;
 }
 export declare abstract class Friendly<T> {
     abstract structState: StructState<T>;

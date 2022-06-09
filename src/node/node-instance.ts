@@ -5,33 +5,13 @@ export abstract class Unfriendly<T> {
 		return unfriendly.friendly;
 	}
 
-	public getPrev(): Unfriendly<T> {
-		return this.friendly.getPrev().host;
-	}
-
-	public getNext(): Unfriendly<T> {
-		return this.friendly.getNext().host;
-	}
-
-	public setPrev(prev: Unfriendly<T>): void {
-		this.friendly.setPrev(prev.friendly);
-	}
-
-	public setNext(next: Unfriendly<T>): void {
-		this.friendly.setNext(next.friendly);
-	}
-
-	public remove(): void {
-		this.friendly.remove();
-	}
-
-	public insert(x: T): void {
-		this.friendly.insert(x);
-	}
-
-	public getValue(): T {
-		return this.friendly.getValue();
-	}
+	public abstract getPrev(): Unfriendly<T>;
+	public abstract getNext(): Unfriendly<T>;
+	public abstract setPrev(prev: Unfriendly<T>): void;
+	public abstract setNext(next: Unfriendly<T>): void;
+	public abstract remove(): void;
+	public abstract insert(x: T): void;
+	public abstract getValue(): T;
 }
 
 

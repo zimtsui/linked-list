@@ -5,27 +5,6 @@ class Unfriendly {
     static getFriendly(unfriendly) {
         return unfriendly.friendly;
     }
-    getPrev() {
-        return this.friendly.getPrev().host;
-    }
-    getNext() {
-        return this.friendly.getNext().host;
-    }
-    setPrev(prev) {
-        this.friendly.setPrev(prev.friendly);
-    }
-    setNext(next) {
-        this.friendly.setNext(next.friendly);
-    }
-    remove() {
-        this.friendly.remove();
-    }
-    insert(x) {
-        this.friendly.insert(x);
-    }
-    getValue() {
-        return this.friendly.getValue();
-    }
 }
 exports.Unfriendly = Unfriendly;
 class Friendly {

@@ -13,8 +13,8 @@ export class Factory<T> implements FactoryLike<T> {
 		host: Node<T>,
 		prev: Node<T>,
 		next: Node<T>,
-	): void {
-		new Listed(
+	) {
+		return new Listed(
 			host,
 			this.factories,
 			prev,

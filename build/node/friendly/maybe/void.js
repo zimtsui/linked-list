@@ -6,7 +6,6 @@ class Void extends node_instance_1.MaybeState {
     constructor(host) {
         super();
         this.host = host;
-        host.maybeState = this;
     }
     getValue() {
         throw new ReferenceError();

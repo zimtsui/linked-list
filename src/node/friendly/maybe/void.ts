@@ -7,7 +7,6 @@ export class Void<T> extends MaybeState<T> {
 		protected host: Node<T>,
 	) {
 		super();
-		host.maybeState = this;
 	}
 
 	public getValue(): T {

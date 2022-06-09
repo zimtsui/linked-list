@@ -1,1 +1,0 @@
-{"version":3,"file":"void.js","sourceRoot":"","sources":["../../../src/node/maybe/void.ts"],"names":[],"mappings":";;;AAAA,kCAAqC;AAIrC,MAAa,IAAQ,SAAQ,iBAAa;IACzC,YACW,IAAa;QAEvB,KAAK,EAAE,CAAC;QAFE,SAAI,GAAJ,IAAI,CAAS;QAGvB,IAAI,CAAC,UAAU,GAAG,IAAI,CAAC;IACxB,CAAC;IAEM,QAAQ;QACd,MAAM,IAAI,cAAc,EAAE,CAAC;IAC5B,CAAC;CACD;AAXD,oBAWC"}

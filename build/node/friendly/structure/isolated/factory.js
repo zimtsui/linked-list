@@ -7,7 +7,7 @@ class Factory {
         this.factories = factories;
     }
     create(host) {
-        new state_1.Isolated(host, this.factories);
+        return new state_1.Isolated(host, this.factories);
     }
 }
 exports.Factory = Factory;

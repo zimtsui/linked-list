@@ -1,6 +1,10 @@
 export abstract class Unfriendly<T> {
 	protected abstract friendly: Friendly<T>;
 
+	protected static getFriendly<T>(unfriendly: Unfriendly<T>): Friendly<T> {
+		return unfriendly.friendly;
+	}
+
 	public getPrev(): Unfriendly<T> {
 		return this.friendly.getPrev().host;
 	}
@@ -53,6 +57,10 @@ export abstract class StructState<T> {
 	public abstract getNext(): Friendly<T>;
 	public abstract setPrev(prev: Friendly<T>): void;
 	public abstract setNext(next: Friendly<T>): void;
+	public abstract setPrevNext(
+		prev: Friendly<T>,
+		next: Friendly<T>,
+	): void;
 	public abstract remove(): void;
 	public abstract insert(node: Friendly<T>): void;
 }

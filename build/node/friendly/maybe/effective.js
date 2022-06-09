@@ -7,7 +7,6 @@ class Effevtive extends node_instance_1.MaybeState {
         super();
         this.host = host;
         this.value = value;
-        host.maybeState = this;
     }
     getValue() {
         return this.value;

@@ -8,7 +8,6 @@ export class Effevtive<T> extends MaybeState<T> {
 		private value: T,
 	) {
 		super();
-		host.maybeState = this;
 	}
 
 	public getValue(): T {

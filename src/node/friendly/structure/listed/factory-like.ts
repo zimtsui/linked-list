@@ -1,4 +1,5 @@
 import { Friendly as Node } from '../../../node-instance';
+import { StructState } from '../../../node-instance';
 
 
 export interface FactoryLike<T> {
@@ -6,5 +7,5 @@ export interface FactoryLike<T> {
 		host: Node<T>,
 		prev: Node<T>,
 		next: Node<T>,
-	): void;
+	): StructState<T>;
 }

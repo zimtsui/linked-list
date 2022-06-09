@@ -2,6 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MaybeState = exports.StructState = exports.Friendly = exports.Unfriendly = void 0;
 class Unfriendly {
+    static getFriendly(unfriendly) {
+        return unfriendly.friendly;
+    }
     getPrev() {
         return this.friendly.getPrev().host;
     }

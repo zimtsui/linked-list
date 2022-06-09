@@ -1,5 +1,6 @@
 export declare abstract class Unfriendly<T> {
     protected abstract friendly: Friendly<T>;
+    protected static getFriendly<T>(unfriendly: Unfriendly<T>): Friendly<T>;
     getPrev(): Unfriendly<T>;
     getNext(): Unfriendly<T>;
     setPrev(prev: Unfriendly<T>): void;
@@ -26,6 +27,7 @@ export declare abstract class StructState<T> {
     abstract getNext(): Friendly<T>;
     abstract setPrev(prev: Friendly<T>): void;
     abstract setNext(next: Friendly<T>): void;
+    abstract setPrevNext(prev: Friendly<T>, next: Friendly<T>): void;
     abstract remove(): void;
     abstract insert(node: Friendly<T>): void;
 }

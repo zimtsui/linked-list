@@ -10,8 +10,8 @@ export class Factory<T> implements FactoryLike<T> {
 		private factories: FactoriesLike<T>,
 	) { }
 
-	public create(host: Node<T>): void {
-		new Isolated(
+	public create(host: Node<T>) {
+		return new Isolated(
 			host,
 			this.factories,
 		);

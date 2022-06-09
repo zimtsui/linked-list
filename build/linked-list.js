@@ -1,29 +1,45 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NodeIterator = exports.LinkedList = void 0;
-const node_1 = require("./node");
+const constructor_1 = require("./node/constructor");
+const assert = require("assert");
 class LinkedList {
     constructor() {
-        this.endpoint = (0, node_1.createSentinel)();
+        this.endpoint = constructor_1.Sentinel.create();
+        this.size = 0;
     }
     push(x) {
         this.endpoint.insert(x);
+        this.size++;
     }
     pop() {
         const node = this.endpoint.getPrev();
         node.remove();
+        this.size--;
         return node.getValue();
     }
     shift() {
         const node = this.endpoint.getNext();
         node.remove();
+        this.size--;
         return node.getValue();
     }
     unshift(x) {
         this.endpoint.getNext().insert(x);
+        this.size++;
     }
     [Symbol.iterator]() {
         return new NodeIterator(this.endpoint);
+    }
+    getSize() {
+        return this.size;
+    }
+    i(index) {
+        assert(this.size > 0, new RangeError());
+        if (index === 0)
+            return this.endpoint.getNext().getValue();
+        else
+            return this.endpoint.getPrev().getValue();
     }
 }
 exports.LinkedList = LinkedList;

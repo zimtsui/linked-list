@@ -11,7 +11,6 @@ export class Isolated<T> extends StructState<T> {
 		private factories: FactoriesLike<T>,
 	) {
 		super();
-		host.structState = this;
 	}
 
 	public getPrev(): Node<T> {
@@ -28,6 +27,17 @@ export class Isolated<T> extends StructState<T> {
 
 	public setNext(next: Node<T>): void {
 		throw new RangeError();
+	}
+
+	public setPrevNext(
+		prev: Node<T>,
+		next: Node<T>,
+	): void {
+		this.host.structState = this.factories.listed.create(
+			this.host,
+			prev,
+			next,
+		);
 	}
 
 	public remove(): void {

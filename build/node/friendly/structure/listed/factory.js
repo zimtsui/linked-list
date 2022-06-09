@@ -7,7 +7,7 @@ class Factory {
         this.factories = factories;
     }
     create(host, prev, next) {
-        new state_1.Listed(host, this.factories, prev, next);
+        return new state_1.Listed(host, this.factories, prev, next);
     }
 }
 exports.Factory = Factory;

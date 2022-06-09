@@ -10,7 +10,6 @@ class Listed extends node_instance_1.StructState {
         this.factories = factories;
         this.prev = prev;
         this.next = next;
-        host.structState = this;
     }
     getPrev() {
         return this.prev;
@@ -24,11 +23,15 @@ class Listed extends node_instance_1.StructState {
     setNext(next) {
         this.next = next;
     }
+    setPrevNext(prev, next) {
+        this.setPrev(prev);
+        this.setNext(next);
+    }
     remove() {
         assert(this.getNext() !== this.host, new RangeError());
         this.prev.setNext(this.next);
         this.next.setPrev(this.prev);
-        this.factories.isolated.create(this.host);
+        this.host.structState = this.factories.isolated.create(this.host);
     }
     insert(node) {
         const prev = this.prev;

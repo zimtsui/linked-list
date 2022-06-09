@@ -7,7 +7,6 @@ class Isolated extends node_instance_1.StructState {
         super();
         this.host = host;
         this.factories = factories;
-        host.structState = this;
     }
     getPrev() {
         throw new RangeError();
@@ -20,6 +19,9 @@ class Isolated extends node_instance_1.StructState {
     }
     setNext(next) {
         throw new RangeError();
+    }
+    setPrevNext(prev, next) {
+        this.host.structState = this.factories.listed.create(this.host, prev, next);
     }
     remove() {
         throw new RangeError();

@@ -8,6 +8,7 @@ export declare class Isolated<T> extends StructState<T> {
     getNext(): Node<T>;
     setPrev(prev: Node<T>): void;
     setNext(next: Node<T>): void;
+    setPrevNext(prev: Node<T>, next: Node<T>): void;
     remove(): void;
     insert(node: Node<T>): void;
 }

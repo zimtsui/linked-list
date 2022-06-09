@@ -1,16 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createRegular = exports.createSentinel = void 0;
+exports.Regular = exports.Sentinel = void 0;
 const node_instance_1 = require("../node-instance");
 const effective_1 = require("./maybe/effective");
 const void_1 = require("./maybe/void");
-const Structure = require("./structure/factories");
-class skeletonConstructor extends node_instance_1.Friendly {
-    constructor(host, structFactories) {
-        super();
-        this.host = host;
-        this.structFactories = structFactories;
-    }
+const factories_1 = require("./structure/factories");
+class Skeleton extends node_instance_1.Friendly {
     getPrev() {
         return this.structState.getPrev();
     }
@@ -27,25 +22,48 @@ class skeletonConstructor extends node_instance_1.Friendly {
         this.structState.remove();
     }
     insert(x) {
-        const node = createRegular(this.host, this.structFactories, x);
+        const node = Regular.create(this.host, x, this.getPrev(), this.getNext());
         this.structState.insert(node);
     }
     getValue() {
         return this.maybeState.getValue();
     }
 }
-function createSentinel(host) {
-    const structFactories = new Structure.Factories();
-    const node = new skeletonConstructor(host, structFactories);
-    new void_1.Void(node);
-    structFactories.listed.create(node, node, node);
-    return node;
-}
-exports.createSentinel = createSentinel;
-function createRegular(host, structFactories, x) {
-    const node = new skeletonConstructor(host, structFactories);
-    new effective_1.Effevtive(node, x);
-    return node;
-}
-exports.createRegular = createRegular;
+// https://github.com/microsoft/TypeScript/issues/30355
+var Sentinel;
+(function (Sentinel_1) {
+    class Sentinel extends Skeleton {
+        constructor(host) {
+            super();
+            this.host = host;
+            this.maybeState = new void_1.Void(this);
+            const structFactories = new factories_1.Factories();
+            this.structState = structFactories.listed.create(this, this, this);
+        }
+        static create(host) {
+            return new Sentinel(host);
+        }
+    }
+    Sentinel.x = 1;
+    function create(host) {
+        return new Sentinel(host);
+    }
+    Sentinel_1.create = create;
+})(Sentinel = exports.Sentinel || (exports.Sentinel = {}));
+var Regular;
+(function (Regular_1) {
+    class Regular extends Skeleton {
+        constructor(host, x, prev, next) {
+            super();
+            this.host = host;
+            this.maybeState = new effective_1.Effevtive(this, x);
+            const structFactories = new factories_1.Factories();
+            this.structState = structFactories.listed.create(this, prev, next);
+        }
+    }
+    function create(host, x, prev, next) {
+        return new Regular(host, x, prev, next);
+    }
+    Regular_1.create = create;
+})(Regular = exports.Regular || (exports.Regular = {}));
 //# sourceMappingURL=constructor.js.map

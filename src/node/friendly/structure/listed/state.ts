@@ -14,7 +14,6 @@ export class Listed<T> extends StructState<T> {
 		private next: Node<T>,
 	) {
 		super();
-		host.structState = this;
 	}
 
 	public getPrev(): Node<T> {
@@ -33,6 +32,14 @@ export class Listed<T> extends StructState<T> {
 		this.next = next;
 	}
 
+	public setPrevNext(
+		prev: Node<T>,
+		next: Node<T>,
+	): void {
+		this.setPrev(prev);
+		this.setNext(next);
+	}
+
 	public remove(): void {
 		assert(
 			this.getNext() !== this.host,
@@ -40,7 +47,7 @@ export class Listed<T> extends StructState<T> {
 		);
 		this.prev.setNext(this.next);
 		this.next.setPrev(this.prev);
-		this.factories.isolated.create(this.host);
+		this.host.structState = this.factories.isolated.create(this.host);
 	}
 
 	public insert(node: Node<T>): void {

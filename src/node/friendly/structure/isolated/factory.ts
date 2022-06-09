@@ -1,7 +1,7 @@
 import { FactoryLike } from './factory-like';
 import { FactoriesLike } from '../factories-like';
 import { Isolated } from './state';
-import { Friendly as Node } from '../../../node-instance';
+import { FriendlyNode as Node } from '../../../node-instance';
 
 
 

@@ -1,6 +1,8 @@
 import {
 	StructState,
-	Friendly as Node,
+	FriendlyNode,
+	Node,
+	assertFriendly,
 } from '../../../node-instance';
 import { FactoriesLike } from '../factories-like';
 import assert = require('assert');
@@ -8,7 +10,7 @@ import assert = require('assert');
 
 export class Listed<T> extends StructState<T> {
 	public constructor(
-		protected host: Node<T>,
+		protected host: FriendlyNode<T>,
 		private factories: FactoriesLike<T>,
 		private prev: Node<T>,
 		private next: Node<T>,
@@ -16,19 +18,21 @@ export class Listed<T> extends StructState<T> {
 		super();
 	}
 
-	public getPrev(): Node<T> {
-		return this.prev;
+	public getPrev(): FriendlyNode<T> {
+		return <FriendlyNode<T>>this.prev;
 	}
 
-	public getNext(): Node<T> {
-		return this.next;
+	public getNext(): FriendlyNode<T> {
+		return <FriendlyNode<T>>this.next;
 	}
 
 	public setPrev(prev: Node<T>): void {
+		assertFriendly(prev);
 		this.prev = prev;
 	}
 
 	public setNext(next: Node<T>): void {
+		assertFriendly(next);
 		this.next = next;
 	}
 
@@ -50,7 +54,7 @@ export class Listed<T> extends StructState<T> {
 		this.host.structState = this.factories.isolated.create(this.host);
 	}
 
-	public insert(node: Node<T>): void {
+	public insert(node: FriendlyNode<T>): void {
 		const prev = this.prev;
 		const next = this.host;
 		this.factories.listed.create(

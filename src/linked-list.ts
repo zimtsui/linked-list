@@ -1,4 +1,4 @@
-import { Unfriendly as Node } from './node/node-instance';
+import { Node as Node } from './node/node-instance';
 import { Sentinel } from './node/constructor';
 import assert = require('assert');
 

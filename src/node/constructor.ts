@@ -1,57 +1,77 @@
 import {
-	Unfriendly as Node,
-	Friendly as FriendlyNode,
+	FriendlyNode,
+	Node,
+	StructState,
+	MaybeState,
 } from './node-instance';
-import {
-	Sentinel as FriendlySentinel,
-	Regular as FriendlyRegular,
-} from './friendly/constructor';
+import { Effevtive } from './friendly/maybe/effective';
+import { Void } from './friendly/maybe/void';
+import { Factories as StructFactories } from './friendly/structure/factories';
 
 
-
-abstract class Skeleton<T> extends Node<T> {
-
-	public getPrev(): Node<T> {
-		return this.friendly.getPrev().host;
+abstract class Skeleton<T> extends FriendlyNode<T> {
+	public getPrev(): FriendlyNode<T> {
+		return this.structState.getPrev();
 	}
 
-	public getNext(): Node<T> {
-		return this.friendly.getNext().host;
+	public getNext(): FriendlyNode<T> {
+		return this.structState.getNext();
 	}
 
 	public setPrev(prev: Node<T>): void {
-		this.friendly.setPrev(Node.getFriendly(prev));
+		this.structState.setPrev(prev);
 	}
 
 	public setNext(next: Node<T>): void {
-		this.friendly.setNext(Node.getFriendly(next));
+		this.structState.setNext(next);
 	}
 
 	public remove(): void {
-		this.friendly.remove();
+		this.structState.remove();
 	}
 
 	public insert(x: T): void {
-		this.friendly.insert(x);
+		const node = Regular.create(
+			x,
+			this.getPrev(),
+			this.getNext(),
+		);
+		this.structState.insert(node);
 	}
 
 	public getValue(): T {
-		return this.friendly.getValue();
+		return this.maybeState.getValue();
 	}
 }
 
+// https://github.com/microsoft/TypeScript/issues/30355
 
 export namespace Sentinel {
-	class Sentinel<T> extends Skeleton<T>{
-		protected friendly: FriendlyNode<T>;
+	class Sentinel<T> extends Skeleton<T> {
+		public structState: StructState<T>;
+		public maybeState: MaybeState<T>;
+
+		public static create<T>(): FriendlyNode<T> {
+			return new Sentinel();
+		}
 
 		public constructor() {
 			super();
-			this.friendly = FriendlySentinel.create(this);
+
+			this.maybeState = new Void(this);
+
+			const structFactories = new StructFactories<T>();
+			this.structState = structFactories.listed.create(
+				this,
+				this,
+				this,
+			);
 		}
+
+		public static x = 1;
 	}
 
-	export function create<T>(): Node<T> {
+	export function create<T>(): FriendlyNode<T> {
 		return new Sentinel();
 	}
 }
@@ -59,28 +79,32 @@ export namespace Sentinel {
 
 export namespace Regular {
 	class Regular<T> extends Skeleton<T> {
-		protected friendly: FriendlyNode<T>;
+		public structState: StructState<T>;
+		public maybeState: MaybeState<T>;
 
 		public constructor(
 			x: T,
-			prev: Node<T>,
-			next: Node<T>,
+			prev: FriendlyNode<T>,
+			next: FriendlyNode<T>,
 		) {
 			super();
-			this.friendly = FriendlyRegular.create(
+
+			this.maybeState = new Effevtive(this, x);
+
+			const structFactories = new StructFactories<T>();
+			this.structState = structFactories.listed.create(
 				this,
-				x,
-				Node.getFriendly(prev),
-				Node.getFriendly(next),
+				prev,
+				next,
 			);
 		}
 	}
 
 	export function create<T>(
 		x: T,
-		prev: Node<T>,
-		next: Node<T>,
-	): Node<T> {
+		prev: FriendlyNode<T>,
+		next: FriendlyNode<T>,
+	): FriendlyNode<T> {
 		return new Regular(
 			x,
 			prev,

@@ -1,5 +1,5 @@
 import { MaybeState } from '../../node-instance';
-import { Friendly as Node } from '../../node-instance';
+import { FriendlyNode as Node } from '../../node-instance';
 
 
 export class Effevtive<T> extends MaybeState<T> {

@@ -1,23 +1,25 @@
 import {
 	StructState,
-	Friendly as Node,
+	FriendlyNode,
+	Node,
+	assertFriendly,
 } from '../../../node-instance';
 import { FactoriesLike } from '../factories-like';
 
 
 export class Isolated<T> extends StructState<T> {
 	public constructor(
-		protected host: Node<T>,
+		protected host: FriendlyNode<T>,
 		private factories: FactoriesLike<T>,
 	) {
 		super();
 	}
 
-	public getPrev(): Node<T> {
+	public getPrev(): FriendlyNode<T> {
 		throw new RangeError();
 	}
 
-	public getNext(): Node<T> {
+	public getNext(): FriendlyNode<T> {
 		throw new RangeError();
 	}
 
@@ -44,7 +46,7 @@ export class Isolated<T> extends StructState<T> {
 		throw new RangeError();
 	}
 
-	public insert(node: Node<T>): void {
+	public insert(node: FriendlyNode<T>): void {
 		throw new RangeError();
 	}
 }

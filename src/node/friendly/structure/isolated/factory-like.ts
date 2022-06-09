@@ -1,4 +1,4 @@
-import { Friendly as Node } from '../../../node-instance';
+import { FriendlyNode as Node } from '../../../node-instance';
 import { StructState } from '../../../node-instance';
 
 

@@ -1,7 +1,8 @@
 import { FactoriesLike } from './factories-like';
 import * as Isolated from './isolated';
 import * as Listed from './listed';
-export declare class Factories<T> implements FactoriesLike<T> {
-    isolated: Isolated.FactoryLike<T>;
-    listed: Listed.Factory<T>;
+import { Friendly } from '../../node-instance';
+export declare class Factories<T, Node extends Friendly<T, Node>> implements FactoriesLike<T, Node> {
+    isolated: Isolated.FactoryLike<T, Node>;
+    listed: Listed.Factory<T, Node>;
 }

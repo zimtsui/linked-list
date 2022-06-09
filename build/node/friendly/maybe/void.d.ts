@@ -1,7 +1,7 @@
 import { MaybeState } from '../../node-instance';
-import { Friendly as Node } from '../../node-instance';
-export declare class Void<T> extends MaybeState<T> {
-    protected host: Node<T>;
-    constructor(host: Node<T>);
+import { Friendly } from '../../node-instance';
+export declare class Void<T, Node extends Friendly<T, Node>> extends MaybeState<T, Node> {
+    protected host: Node;
+    constructor(host: Node);
     getValue(): T;
 }

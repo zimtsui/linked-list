@@ -1,5 +1,5 @@
-import { Node as Node } from './node/node-instance';
-import { Sentinel } from './node/constructor';
+// import { Sk } from './node/node-instance';
+import { Sentinel, Skeleton } from './node/constructor';
 import assert = require('assert');
 
 
@@ -55,7 +55,7 @@ export class LinkedList<T> implements Iterable<T> {
 
 export class NodeIterator<T> implements Iterator<T, void> {
 	public constructor(
-		private node: Node<T>,
+		private node: Skeleton<T>,
 	) { }
 
 	public next(): IteratorResult<T> {

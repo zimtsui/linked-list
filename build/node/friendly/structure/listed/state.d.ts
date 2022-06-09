@@ -1,16 +1,16 @@
-import { StructState, Friendly as Node } from '../../../node-instance';
+import { StructState, Friendly } from '../../../node-instance';
 import { FactoriesLike } from '../factories-like';
-export declare class Listed<T> extends StructState<T> {
-    protected host: Node<T>;
+export declare class Listed<T, Node extends Friendly<T, Node>> extends StructState<T, Node> {
+    protected host: Node;
     private factories;
     private prev;
     private next;
-    constructor(host: Node<T>, factories: FactoriesLike<T>, prev: Node<T>, next: Node<T>);
-    getPrev(): Node<T>;
-    getNext(): Node<T>;
-    setPrev(prev: Node<T>): void;
-    setNext(next: Node<T>): void;
-    setPrevNext(prev: Node<T>, next: Node<T>): void;
+    constructor(host: Node, factories: FactoriesLike<T, Node>, prev: Node, next: Node);
+    getPrev(): Node;
+    getNext(): Node;
+    setPrev(prev: Node): void;
+    setNext(next: Node): void;
+    setPrevNext(prev: Node, next: Node): void;
     remove(): void;
-    insert(node: Node<T>): void;
+    insert(node: Node): void;
 }

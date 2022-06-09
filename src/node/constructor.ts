@@ -1,6 +1,6 @@
 import {
-	FriendlyNode,
-	Node,
+	Friendly,
+	Unfriendly,
 	StructState,
 	MaybeState,
 } from './node-instance';
@@ -9,20 +9,30 @@ import { Void } from './friendly/maybe/void';
 import { Factories as StructFactories } from './friendly/structure/factories';
 
 
-abstract class Skeleton<T> extends FriendlyNode<T> {
-	public getPrev(): FriendlyNode<T> {
+
+// typeclass
+interface UnFriendly<T, Node extends UnFriendly<T, Node>> extends
+	Friendly<T, Node>,
+	Unfriendly<T, Node> { }
+
+export abstract class Skeleton<T>
+	implements UnFriendly<T, Skeleton<T>> {
+	public abstract structState: StructState<T, Skeleton<T>>;
+	public abstract maybeState: MaybeState<T, Skeleton<T>>;
+
+	public getPrev(): Skeleton<T> {
 		return this.structState.getPrev();
 	}
 
-	public getNext(): FriendlyNode<T> {
+	public getNext(): Skeleton<T> {
 		return this.structState.getNext();
 	}
 
-	public setPrev(prev: Node<T>): void {
+	public setPrev(prev: Skeleton<T>): void {
 		this.structState.setPrev(prev);
 	}
 
-	public setNext(next: Node<T>): void {
+	public setNext(next: Skeleton<T>): void {
 		this.structState.setNext(next);
 	}
 
@@ -48,19 +58,19 @@ abstract class Skeleton<T> extends FriendlyNode<T> {
 
 export namespace Sentinel {
 	class Sentinel<T> extends Skeleton<T> {
-		public structState: StructState<T>;
-		public maybeState: MaybeState<T>;
+		public structState: StructState<T, Skeleton<T>>;
+		public maybeState: MaybeState<T, Skeleton<T>>;
 
-		public static create<T>(): FriendlyNode<T> {
-			return new Sentinel();
-		}
+		// public static create<T, Node extends Skeleton<T, Node>>(): Skeleton<T, Node> {
+		// 	return new Sentinel();
+		// }
 
 		public constructor() {
 			super();
 
-			this.maybeState = new Void(this);
+			this.maybeState = new Void<T, Skeleton<T>>(this);
 
-			const structFactories = new StructFactories<T>();
+			const structFactories = new StructFactories<T, Skeleton<T>>();
 			this.structState = structFactories.listed.create(
 				this,
 				this,
@@ -71,7 +81,7 @@ export namespace Sentinel {
 		public static x = 1;
 	}
 
-	export function create<T>(): FriendlyNode<T> {
+	export function create<T>(): Skeleton<T> {
 		return new Sentinel();
 	}
 }
@@ -79,19 +89,19 @@ export namespace Sentinel {
 
 export namespace Regular {
 	class Regular<T> extends Skeleton<T> {
-		public structState: StructState<T>;
-		public maybeState: MaybeState<T>;
+		public structState: StructState<T, Skeleton<T>>;
+		public maybeState: MaybeState<T, Skeleton<T>>;
 
 		public constructor(
 			x: T,
-			prev: FriendlyNode<T>,
-			next: FriendlyNode<T>,
+			prev: Skeleton<T>,
+			next: Skeleton<T>,
 		) {
 			super();
 
-			this.maybeState = new Effevtive(this, x);
+			this.maybeState = new Effevtive<T, Skeleton<T>>(this, x);
 
-			const structFactories = new StructFactories<T>();
+			const structFactories = new StructFactories<T, Skeleton<T>>();
 			this.structState = structFactories.listed.create(
 				this,
 				prev,
@@ -102,9 +112,9 @@ export namespace Regular {
 
 	export function create<T>(
 		x: T,
-		prev: FriendlyNode<T>,
-		next: FriendlyNode<T>,
-	): FriendlyNode<T> {
+		prev: Skeleton<T>,
+		next: Skeleton<T>,
+	): Skeleton<T> {
 		return new Regular(
 			x,
 			prev,

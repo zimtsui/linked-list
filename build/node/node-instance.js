@@ -1,15 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MaybeState = exports.StructState = exports.Friendly = exports.Unfriendly = void 0;
-class Unfriendly {
-    static getFriendly(unfriendly) {
-        return unfriendly.friendly;
-    }
-}
-exports.Unfriendly = Unfriendly;
-class Friendly {
-}
-exports.Friendly = Friendly;
+exports.MaybeState = exports.StructState = void 0;
 class StructState {
 }
 exports.StructState = StructState;

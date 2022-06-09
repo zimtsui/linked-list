@@ -1,7 +1,7 @@
-import { FriendlyNode as Node } from '../../../node-instance';
+import { Friendly } from '../../../node-instance';
 import { StructState } from '../../../node-instance';
 
 
-export interface FactoryLike<T> {
-	create(host: Node<T>): StructState<T>;
+export interface FactoryLike<T, Node extends Friendly<T, Node>> {
+	create(host: Node): StructState<T, Node>;
 }

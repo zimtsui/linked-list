@@ -1,37 +1,32 @@
-export declare abstract class Unfriendly<T> {
-    protected abstract friendly: Friendly<T>;
-    protected static getFriendly<T>(unfriendly: Unfriendly<T>): Friendly<T>;
-    abstract getPrev(): Unfriendly<T>;
-    abstract getNext(): Unfriendly<T>;
-    abstract setPrev(prev: Unfriendly<T>): void;
-    abstract setNext(next: Unfriendly<T>): void;
-    abstract remove(): void;
-    abstract insert(x: T): void;
-    abstract getValue(): T;
+export interface Unfriendly<T, Node extends Unfriendly<T, Node>> {
+    getPrev(): Node;
+    getNext(): Node;
+    remove(): void;
+    insert(x: T): void;
+    getValue(): T;
 }
-export declare abstract class Friendly<T> {
-    abstract structState: StructState<T>;
-    abstract maybeState: MaybeState<T>;
-    abstract host: Unfriendly<T>;
-    abstract getPrev(): Friendly<T>;
-    abstract getNext(): Friendly<T>;
-    abstract setPrev(prev: Friendly<T>): void;
-    abstract setNext(next: Friendly<T>): void;
-    abstract remove(): void;
-    abstract insert(x: T): void;
-    abstract getValue(): T;
+export interface Friendly<T, Node extends Friendly<T, Node>> extends Unfriendly<T, Node> {
+    structState: StructState<T, Node>;
+    maybeState: MaybeState<T, Node>;
+    getPrev(): Node;
+    getNext(): Node;
+    setPrev(prev: Node): void;
+    setNext(next: Node): void;
+    remove(): void;
+    insert(x: T): void;
+    getValue(): T;
 }
-export declare abstract class StructState<T> {
-    protected abstract host: Friendly<T>;
-    abstract getPrev(): Friendly<T>;
-    abstract getNext(): Friendly<T>;
-    abstract setPrev(prev: Friendly<T>): void;
-    abstract setNext(next: Friendly<T>): void;
-    abstract setPrevNext(prev: Friendly<T>, next: Friendly<T>): void;
+export declare abstract class StructState<T, Node extends Friendly<T, Node>> {
+    protected abstract host: Node;
+    abstract getPrev(): Node;
+    abstract getNext(): Node;
+    abstract setPrev(prev: Node): void;
+    abstract setNext(next: Node): void;
+    abstract setPrevNext(prev: Node, next: Node): void;
     abstract remove(): void;
-    abstract insert(node: Friendly<T>): void;
+    abstract insert(node: Node): void;
 }
-export declare abstract class MaybeState<T> {
-    protected abstract host: Friendly<T>;
+export declare abstract class MaybeState<T, Node extends Friendly<T, Node>> {
+    protected abstract host: Node;
     abstract getValue(): T;
 }

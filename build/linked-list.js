@@ -1,13 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NodeIterator = exports.LinkedList = void 0;
-// import { Sk } from './node/node-instance';
 const constructor_1 = require("./node/constructor");
 const assert = require("assert");
 class LinkedList {
     constructor() {
-        this.endpoint = constructor_1.Sentinel.create();
         this.size = 0;
+        this.endpoint = constructor_1.Sentinel.create();
     }
     push(x) {
         this.endpoint.insert(x);

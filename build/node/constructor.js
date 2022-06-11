@@ -1,49 +1,37 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Regular = exports.Sentinel = exports.Skeleton = void 0;
-const effective_1 = require("./friendly/maybe/effective");
-const void_1 = require("./friendly/maybe/void");
-const factories_1 = require("./friendly/structure/factories");
-class Skeleton {
-    getPrev() {
-        return this.structState.getPrev();
-    }
-    getNext() {
-        return this.structState.getNext();
-    }
-    setPrev(prev) {
-        this.structState.setPrev(prev);
-    }
-    setNext(next) {
-        this.structState.setNext(next);
-    }
-    remove() {
-        this.structState.remove();
-    }
-    insert(x) {
-        const node = Regular.create(x, this.getPrev(), this.getNext());
-        this.structState.insert(node);
-    }
-    getValue() {
-        return this.maybeState.getValue();
-    }
-}
-exports.Skeleton = Skeleton;
+exports.Regular = exports.Sentinel = void 0;
+const node_instance_1 = require("./node-instance");
+const factories_1 = require("./state.d/factories");
 // https://github.com/microsoft/TypeScript/issues/30355
 var Sentinel;
 (function (Sentinel_1) {
-    class Sentinel extends Skeleton {
-        // public static create<T, Node extends Skeleton<T, Node>>(): Skeleton<T, Node> {
-        // 	return new Sentinel();
-        // }
+    class Sentinel extends node_instance_1.Void {
         constructor() {
             super();
-            this.maybeState = new void_1.Void(this);
-            const structFactories = new factories_1.Factories();
-            this.structState = structFactories.listed.create(this, this, this);
+            const factories = new factories_1.Factories();
+            this.state = factories.listed.create(this, this, this);
+        }
+        getPrev() {
+            return this.state.getPrev();
+        }
+        getNext() {
+            return this.state.getNext();
+        }
+        setPrev(prev) {
+            this.state.setPrev(prev);
+        }
+        setNext(next) {
+            this.state.setNext(next);
+        }
+        remove() {
+            this.state.remove();
+        }
+        insert(x) {
+            const node = Regular.create(x, this.getPrev(), this.getNext());
+            this.state.insert(node);
         }
     }
-    Sentinel.x = 1;
     function create() {
         return new Sentinel();
     }
@@ -51,12 +39,31 @@ var Sentinel;
 })(Sentinel = exports.Sentinel || (exports.Sentinel = {}));
 var Regular;
 (function (Regular_1) {
-    class Regular extends Skeleton {
+    class Regular extends node_instance_1.Effective {
         constructor(x, prev, next) {
             super();
-            this.maybeState = new effective_1.Effevtive(this, x);
-            const structFactories = new factories_1.Factories();
-            this.structState = structFactories.listed.create(this, prev, next);
+            this.x = x;
+            const factories = new factories_1.Factories();
+            this.state = factories.listed.create(this, prev, next);
+        }
+        getPrev() {
+            return this.state.getPrev();
+        }
+        getNext() {
+            return this.state.getNext();
+        }
+        setPrev(prev) {
+            this.state.setPrev(prev);
+        }
+        setNext(next) {
+            this.state.setNext(next);
+        }
+        remove() {
+            this.state.remove();
+        }
+        insert(x) {
+            const node = create(x, this.getPrev(), this.getNext());
+            this.state.insert(node);
         }
     }
     function create(x, prev, next) {

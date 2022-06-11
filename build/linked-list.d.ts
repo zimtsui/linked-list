@@ -1,7 +1,8 @@
-import { Skeleton } from './node/constructor';
+import { Node } from './node/node-instance';
 export declare class LinkedList<T> implements Iterable<T> {
-    private endpoint;
+    protected endpoint: Node<T>;
     private size;
+    constructor();
     push(x: T): void;
     pop(): T;
     shift(): T;
@@ -12,6 +13,6 @@ export declare class LinkedList<T> implements Iterable<T> {
 }
 export declare class NodeIterator<T> implements Iterator<T, void> {
     private node;
-    constructor(node: Skeleton<T>);
+    constructor(node: Node<T>);
     next(): IteratorResult<T>;
 }

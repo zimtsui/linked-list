@@ -1,42 +1,43 @@
-export interface Unfriendly<T, Node extends Unfriendly<T, Node>> {
-	getPrev(): Node;
-	getNext(): Node;
-	remove(): void;
-	insert(x: T): void;
-	getValue(): T;
-}
+export abstract class Node<T> {
+	public abstract state: State<T>;
 
-export interface Friendly<T, Node extends Friendly<T, Node>> extends Unfriendly<T, Node> {
-	structState: StructState<T, Node>;
-	maybeState: MaybeState<T, Node>;
-
-	getPrev(): Node;
-	getNext(): Node;
-	setPrev(prev: Node): void;
-	setNext(next: Node): void;
-	remove(): void;
-	insert(x: T): void;
-	getValue(): T;
+	public abstract getPrev(): Node<T>;
+	public abstract getNext(): Node<T>;
+	public abstract setPrev(prev: Node<T>): void;
+	public abstract setNext(next: Node<T>): void;
+	public abstract remove(): void;
+	public abstract insert(x: T): void;
+	public abstract getValue(): T;
 }
 
 
-export abstract class StructState<T, Node extends Friendly<T, Node>> {
-	protected abstract host: Node;
+export abstract class State<T> {
+	protected abstract host: Node<T>;
 
-	public abstract getPrev(): Node;
-	public abstract getNext(): Node;
-	public abstract setPrev(prev: Node): void;
-	public abstract setNext(next: Node): void;
+	public abstract getPrev(): Node<T>;
+	public abstract getNext(): Node<T>;
+	public abstract setPrev(prev: Node<T>): void;
+	public abstract setNext(next: Node<T>): void;
 	public abstract setPrevNext(
-		prev: Node,
-		next: Node,
+		prev: Node<T>,
+		next: Node<T>,
 	): void;
 	public abstract remove(): void;
-	public abstract insert(node: Node): void;
+	public abstract insert(node: Node<T>): void;
 }
 
 
-export abstract class MaybeState<T, Node extends Friendly<T, Node>> {
-	protected abstract host: Node;
-	public abstract getValue(): T;
+export abstract class Effective<T> extends Node<T> {
+	protected abstract x: T;
+
+	public getValue(): T {
+		return this.x;
+	}
+}
+
+
+export abstract class Void<T> extends Node<T> {
+	public getValue(): T {
+		throw new ReferenceError();
+	}
 }

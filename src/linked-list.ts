@@ -1,12 +1,15 @@
-// import { Sk } from './node/node-instance';
-import { Sentinel, Skeleton } from './node/constructor';
+import { Node } from './node/node-instance';
+import { Sentinel } from './node/constructor';
 import assert = require('assert');
 
 
-
 export class LinkedList<T> implements Iterable<T> {
-	private endpoint = Sentinel.create<T>();
+	protected endpoint: Node<T>;
 	private size = 0;
+
+	public constructor() {
+		this.endpoint = Sentinel.create();
+	}
 
 	public push(x: T): void {
 		this.endpoint.insert(x);
@@ -55,7 +58,7 @@ export class LinkedList<T> implements Iterable<T> {
 
 export class NodeIterator<T> implements Iterator<T, void> {
 	public constructor(
-		private node: Skeleton<T>,
+		private node: Node<T>,
 	) { }
 
 	public next(): IteratorResult<T> {

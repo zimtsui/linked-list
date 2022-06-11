@@ -1,5 +1,5 @@
-import { Node } from '../../node-instance';
-import { State } from '../../node-instance';
+import { Node } from '../../node';
+import { State } from '../../node';
 
 
 export interface FactoryLike<T> {

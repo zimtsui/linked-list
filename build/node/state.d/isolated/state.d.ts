@@ -1,4 +1,4 @@
-import { State, Node } from '../../node-instance';
+import { State, Node } from '../../node';
 import { FactoriesLike } from '../factories-like';
 export declare class Isolated<T> extends State<T> {
     protected host: Node<T>;

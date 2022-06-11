@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Listed = void 0;
-const node_instance_1 = require("../../node-instance");
+const node_1 = require("../../node");
 const assert = require("assert");
-class Listed extends node_instance_1.State {
+class Listed extends node_1.State {
     constructor(host, factories, prev, next) {
         super();
         this.host = host;
@@ -36,7 +36,7 @@ class Listed extends node_instance_1.State {
     insert(node) {
         const prev = this.prev;
         const next = this.host;
-        this.factories.listed.create(node, prev, next);
+        node.setPrevNext(prev, next);
         prev.setNext(node);
         next.setPrev(node);
     }

@@ -1,5 +1,6 @@
-import { Node } from './node/node-instance';
+import { Node } from './node/node';
 import { Sentinel } from './node/constructor';
+import { NodeIterator } from './node/node-iterator';
 import assert = require('assert');
 
 
@@ -52,27 +53,5 @@ export class LinkedList<T> implements Iterable<T> {
 			return this.endpoint.getNext().getValue();
 		else
 			return this.endpoint.getPrev().getValue();
-	}
-}
-
-
-export class NodeIterator<T> implements Iterator<T, void> {
-	public constructor(
-		private node: Node<T>,
-	) { }
-
-	public next(): IteratorResult<T> {
-		this.node = this.node.getNext();
-		try {
-			return {
-				done: false,
-				value: this.node.getValue(),
-			};
-		} catch (err) {
-			return {
-				done: true,
-				value: void null,
-			};
-		}
 	}
 }

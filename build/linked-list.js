@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NodeIterator = exports.LinkedList = void 0;
+exports.LinkedList = void 0;
 const constructor_1 = require("./node/constructor");
+const node_iterator_1 = require("./node/node-iterator");
 const assert = require("assert");
 class LinkedList {
     constructor() {
@@ -29,7 +30,7 @@ class LinkedList {
         this.size++;
     }
     [Symbol.iterator]() {
-        return new NodeIterator(this.endpoint);
+        return new node_iterator_1.NodeIterator(this.endpoint);
     }
     getSize() {
         return this.size;
@@ -43,25 +44,4 @@ class LinkedList {
     }
 }
 exports.LinkedList = LinkedList;
-class NodeIterator {
-    constructor(node) {
-        this.node = node;
-    }
-    next() {
-        this.node = this.node.getNext();
-        try {
-            return {
-                done: false,
-                value: this.node.getValue(),
-            };
-        }
-        catch (err) {
-            return {
-                done: true,
-                value: void null,
-            };
-        }
-    }
-}
-exports.NodeIterator = NodeIterator;
 //# sourceMappingURL=linked-list.js.map

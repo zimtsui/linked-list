@@ -19,4 +19,4 @@ class Void extends Node {
     }
 }
 exports.Void = Void;
-//# sourceMappingURL=node-instance.js.map
+//# sourceMappingURL=node.js.map

@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Regular = exports.Sentinel = void 0;
-const node_instance_1 = require("./node-instance");
+const node_1 = require("./node");
 const factories_1 = require("./state.d/factories");
 // https://github.com/microsoft/TypeScript/issues/30355
 var Sentinel;
 (function (Sentinel_1) {
-    class Sentinel extends node_instance_1.Void {
+    class Sentinel extends node_1.Void {
         constructor() {
             super();
             const factories = new factories_1.Factories();
@@ -24,6 +24,9 @@ var Sentinel;
         setNext(next) {
             this.state.setNext(next);
         }
+        setPrevNext(prev, next) {
+            this.state.setPrevNext(prev, next);
+        }
         remove() {
             this.state.remove();
         }
@@ -39,12 +42,12 @@ var Sentinel;
 })(Sentinel = exports.Sentinel || (exports.Sentinel = {}));
 var Regular;
 (function (Regular_1) {
-    class Regular extends node_instance_1.Effective {
-        constructor(x, prev, next) {
+    class Regular extends node_1.Effective {
+        constructor(x) {
             super();
             this.x = x;
             const factories = new factories_1.Factories();
-            this.state = factories.listed.create(this, prev, next);
+            this.state = factories.isolated.create(this);
         }
         getPrev() {
             return this.state.getPrev();
@@ -58,6 +61,9 @@ var Regular;
         setNext(next) {
             this.state.setNext(next);
         }
+        setPrevNext(prev, next) {
+            this.state.setPrevNext(prev, next);
+        }
         remove() {
             this.state.remove();
         }
@@ -67,7 +73,7 @@ var Regular;
         }
     }
     function create(x, prev, next) {
-        return new Regular(x, prev, next);
+        return new Regular(x);
     }
     Regular_1.create = create;
 })(Regular = exports.Regular || (exports.Regular = {}));

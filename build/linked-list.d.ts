@@ -1,4 +1,4 @@
-import { Node } from './node/node-instance';
+import { Node } from './node/node';
 export declare class LinkedList<T> implements Iterable<T> {
     protected endpoint: Node<T>;
     private size;
@@ -10,9 +10,4 @@ export declare class LinkedList<T> implements Iterable<T> {
     [Symbol.iterator](): Iterator<T, void>;
     getSize(): number;
     i(index: 0 | -1): T;
-}
-export declare class NodeIterator<T> implements Iterator<T, void> {
-    private node;
-    constructor(node: Node<T>);
-    next(): IteratorResult<T>;
 }

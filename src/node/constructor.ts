@@ -3,7 +3,7 @@ import {
 	Node,
 	Effective,
 	Void,
-} from './node-instance';
+} from './node';
 import { Factories } from './state.d/factories';
 
 
@@ -40,6 +40,13 @@ export namespace Sentinel {
 			this.state.setNext(next);
 		}
 
+		public setPrevNext(
+			prev: Node<T>,
+			next: Node<T>,
+		): void {
+			this.state.setPrevNext(prev, next);
+		}
+
 		public remove(): void {
 			this.state.remove();
 		}
@@ -66,17 +73,13 @@ export namespace Regular {
 
 		public constructor(
 			protected x: T,
-			prev: Node<T>,
-			next: Node<T>,
 		) {
 			super();
 
 
 			const factories = new Factories<T>();
-			this.state = factories.listed.create(
+			this.state = factories.isolated.create(
 				this,
-				prev,
-				next,
 			);
 		}
 
@@ -94,6 +97,13 @@ export namespace Regular {
 
 		public setNext(next: Node<T>): void {
 			this.state.setNext(next);
+		}
+
+		public setPrevNext(
+			prev: Node<T>,
+			next: Node<T>,
+		): void {
+			this.state.setPrevNext(prev, next);
 		}
 
 		public remove(): void {
@@ -117,8 +127,6 @@ export namespace Regular {
 	): Node<T> {
 		return new Regular(
 			x,
-			prev,
-			next,
 		);
 	}
 }

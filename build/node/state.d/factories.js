@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Factories = void 0;
-const Isolated = require("./isolated");
-const Listed = require("./listed");
+const Isolated = require("./isolated/factory");
+const Listed = require("./listed/factory");
 class Factories {
     constructor() {
         this.isolated = new Isolated.Factory(this);

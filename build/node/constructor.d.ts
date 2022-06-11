@@ -1,4 +1,4 @@
-import { Node } from './node-instance';
+import { Node } from './node';
 export declare namespace Sentinel {
     function create<T>(): Node<T>;
 }

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Isolated = void 0;
-const node_instance_1 = require("../../node-instance");
-class Isolated extends node_instance_1.State {
+const node_1 = require("../../node");
+class Isolated extends node_1.State {
     constructor(host, factories) {
         super();
         this.host = host;

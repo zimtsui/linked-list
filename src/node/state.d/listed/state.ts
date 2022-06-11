@@ -1,7 +1,7 @@
 import {
 	State,
 	Node,
-} from '../../node-instance';
+} from '../../node';
 import { FactoriesLike } from '../factories-like';
 import assert = require('assert');
 
@@ -53,11 +53,7 @@ export class Listed<T> extends State<T> {
 	public insert(node: Node<T>): void {
 		const prev = this.prev;
 		const next = this.host;
-		this.factories.listed.create(
-			node,
-			prev,
-			next,
-		);
+		node.setPrevNext(prev, next);
 		prev.setNext(node);
 		next.setPrev(node);
 	}

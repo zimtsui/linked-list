@@ -1,7 +1,7 @@
 import {
 	State,
 	Node,
-} from '../../node-instance';
+} from '../../node';
 import { FactoriesLike } from '../factories-like';
 
 

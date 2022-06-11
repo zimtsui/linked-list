@@ -4,6 +4,7 @@ export declare abstract class Node<T> {
     abstract getNext(): Node<T>;
     abstract setPrev(prev: Node<T>): void;
     abstract setNext(next: Node<T>): void;
+    abstract setPrevNext(prev: Node<T>, next: Node<T>): void;
     abstract remove(): void;
     abstract insert(x: T): void;
     abstract getValue(): T;

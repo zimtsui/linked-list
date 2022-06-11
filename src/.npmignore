@@ -10,3 +10,7 @@
 # test
 /test
 /ava.config.mjs
+
+# dia
+/*.dia
+/*.dia~

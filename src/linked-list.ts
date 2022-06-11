@@ -18,6 +18,10 @@ export class LinkedList<T> implements Iterable<T> {
 	}
 
 	public pop(): T {
+		assert(
+			this.size > 0,
+			new RangeError(),
+		)
 		const node = this.endpoint.getPrev();
 		node.remove();
 		this.size--;
@@ -25,6 +29,10 @@ export class LinkedList<T> implements Iterable<T> {
 	}
 
 	public shift(): T {
+		assert(
+			this.size > 0,
+			new RangeError(),
+		)
 		const node = this.endpoint.getNext();
 		node.remove();
 		this.size--;

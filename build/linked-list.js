@@ -14,12 +14,14 @@ class LinkedList {
         this.size++;
     }
     pop() {
+        assert(this.size > 0, new RangeError());
         const node = this.endpoint.getPrev();
         node.remove();
         this.size--;
         return node.getValue();
     }
     shift() {
+        assert(this.size > 0, new RangeError());
         const node = this.endpoint.getNext();
         node.remove();
         this.size--;

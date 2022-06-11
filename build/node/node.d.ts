@@ -1,4 +1,15 @@
 export declare abstract class Node<T> {
+    protected abstract state: State<T>;
+    abstract getPrev(): Node<T>;
+    abstract getNext(): Node<T>;
+    abstract setPrev(prev: Node<T>): void;
+    abstract setNext(next: Node<T>): void;
+    abstract setPrevNext(prev: Node<T>, next: Node<T>): void;
+    abstract remove(): void;
+    abstract insert(x: T): void;
+    abstract getValue(): T;
+}
+export declare abstract class Friendly<T> extends Node<T> {
     abstract state: State<T>;
     abstract getPrev(): Node<T>;
     abstract getNext(): Node<T>;

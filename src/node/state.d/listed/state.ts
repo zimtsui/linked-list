@@ -1,6 +1,7 @@
 import {
 	State,
 	Node,
+	Friendly,
 } from '../../node';
 import { FactoriesLike } from '../factories-like';
 import assert = require('assert');
@@ -47,7 +48,7 @@ export class Listed<T> extends State<T> {
 		);
 		this.prev.setNext(this.next);
 		this.next.setPrev(this.prev);
-		this.host.state = this.factories.isolated.create(this.host);
+		(<Friendly<T>>this.host).state = this.factories.isolated.create(this.host);
 	}
 
 	public insert(node: Node<T>): void {

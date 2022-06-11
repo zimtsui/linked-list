@@ -1,6 +1,7 @@
 import {
 	State,
 	Node,
+	Friendly,
 } from '../../node';
 import { FactoriesLike } from '../factories-like';
 
@@ -33,7 +34,7 @@ export class Isolated<T> extends State<T>{
 		prev: Node<T>,
 		next: Node<T>,
 	): void {
-		this.host.state = this.factories.listed.create(
+		(<Friendly<T>>this.host).state = this.factories.listed.create(
 			this.host,
 			prev,
 			next,
